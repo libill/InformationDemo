@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">拖动列表</string>
+        <string-array name="jazz_artist_names">
+      <item>Brad Mehldau</item>
+      <item>Joshua Redman</item>
+      <item>Chick Corea</item>
+      <item>Kurt Rosenwinkel</item>
+    </string-array>
+    <string-array name="jazz_artist_albums">
+      <item>Largo, Art of the Trio</item>
+      <item>Elastic, Momentum</item>
+      <item>Light as a Feather</item>
+      <item>Deep Song, Heartcore</item>
+    </string-array>
+</resources>
