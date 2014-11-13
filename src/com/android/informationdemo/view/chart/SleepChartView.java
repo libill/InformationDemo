@@ -61,13 +61,8 @@ public class SleepChartView extends View {
 		initData();
 
 		drawBackground(canvas);
-
-		if (chartType == ChartType.DayBarChart) {
-			drawDayBarChart(canvas);
-		} else if (chartType == ChartType.WeekBarChart) {
-			drawWeekBarChart(canvas);
-		}
-
+		
+		drawBarChart(canvas);
 	}
 
 	public void initData() {
@@ -88,6 +83,14 @@ public class SleepChartView extends View {
 		mPaint.setColor(Color.WHITE);
 		mPaint.setStyle(Paint.Style.FILL);
 		canvas.drawRect(0, 0, width + left + right, height + top + bottom, mPaint);
+	}
+	
+	public void drawBarChart(Canvas canvas){
+		if (chartType == ChartType.DayBarChart) {
+			drawDayBarChart(canvas);
+		} else if (chartType == ChartType.WeekBarChart) {
+			drawWeekBarChart(canvas);
+		}
 	}
 
 	public void drawDayGridChart(Canvas canvas) {
@@ -190,24 +193,38 @@ public class SleepChartView extends View {
 		float startY = top;
 		float stopX = width + right;
 		float stopY = bottom;
+		
+		Paint textYPaint = new Paint();
+		textYPaint.setColor(Color.GRAY);
+		textYPaint.setStyle(Paint.Style.FILL);
+		textYPaint.setAntiAlias(true);
+		textYPaint.setTextSize(30);
+		textYPaint.setTextAlign(Paint.Align.LEFT);
+		// 底部文字
+		textYPaint.setTextAlign(Paint.Align.CENTER);
+		FontMetrics fm = textYPaint.getFontMetrics();
+		float textHeight = fm.descent - fm.ascent;
 
 		// X横坐标
 		for (int i = 0; i <= ySpaceNum; i++) {
-			canvas.drawLine(startX, startY, stopX, stopY, mPaint);
+			if (i%4==1) {
+				canvas.drawLine(startX, startY, stopX, stopY, mPaint);
+				canvas.drawText(ySpaceNum-i+"", startX/2, startY+textHeight/3, textYPaint);
+			}
 			startY += ySpace;
 			stopY += ySpace;
 		}
 
-		// Y横坐标
-		startX = left;
-		startY = right;
-		stopX = top;
-		stopY = height + bottom;
-		for (int i = 0; i <= xSpaceNum; i++) {
-			canvas.drawLine(startX, startY, stopX, stopY, mPaint);
-			startX += xSpace;
-			stopX += xSpace;
-		}
+//		// Y横坐标
+//		startX = left;
+//		startY = right;
+//		stopX = top;
+//		stopY = height + bottom;
+//		for (int i = 0; i <= xSpaceNum; i++) {
+//			canvas.drawLine(startX, startY, stopX, stopY, mPaint);
+//			startX += xSpace;
+//			stopX += xSpace;
+//		}
 	}
 
 	public void drawWeekBarChart(Canvas canvas) {
@@ -272,7 +289,7 @@ public class SleepChartView extends View {
 		}
 
 		for (int i = 0; i < ySpaceNum; i++) {
-			yValues.add(1f * (1 + (i * 3) % ySpaceNum));
+			yValues.add(1f * 2*i);
 		}
 
 		invalidate();
